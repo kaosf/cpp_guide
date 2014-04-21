@@ -1,0 +1,4 @@
+include:"imgdata.txt"
+title:"テスト"
+sakuya_oko:"クッキー焼かずに2048とな？"
+marisa_shobo:"別にいいのでは"

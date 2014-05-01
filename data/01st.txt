@@ -1,0 +1,75 @@
+include:"imgdata.txt"
+sakuya_oko:"本格的なC++プログラミングに入っていきます"
+ozyou_oko:"うむ"
+sakuya_oko:"前回言ったようにC++のプログラムはint main()から始まり上から順に処理していきます"
+sakuya_niya:"正確には';'毎に処理されるんですけどね"
+ozyou_odo:"';'毎とは？"
+sakuya_niya:"前回作ったプログラムありますよね。以下のコードでもいけます"
+start:
+#include<iostream>
+int main()
+{
+    std::cout<<
+    "hello world"
+    <<std::endl;
+}
+end:
+sakuya_wara:"#includeなどの#で始まる命令は行が大事になってくるのですが、int main()などは改行は空白として扱われます"
+ozyou_odo:"int main(){std::cout<<"hello world"<<std::endl;}でもいいってこと？"
+sakuya_wara:"そのとおりです"
+ozyou_oko:"ところで今のところ出力だけやったよね、何かプログラムらしいことないの"
+sakuya_oko:"まずは変数の宣言です"
+ozyou_odo:"ああ、数学で出てくるあれみたいな"
+sakuya_wara:"ようはデータを格納する箱みたいなやつですね"
+ozyou_oko:"ふむ…"
+sakuya_oko:"例えば以下のようにします"
+start:
+int main()
+{
+    int a = 10;
+    double b = 20;
+}
+end:
+ozyou_odo:"どういうこっちゃ"
+sakuya_oko:"今から説明しますが、一つ大事なことがあって、データには「型」と呼ばれる分類分けみたいなのがあります"
+ozyou_odo:"型？"
+sakuya_wara:"変数aとbがあったときaが文字列でbが数字だったらa+bとかしたときに困りますよね"
+ozyou_wara:"なるほど"
+sakuya_oko:"型、変数名の順番で書くことで変数を「今から使いますよ」宣言します"
+ozyou_wara:"「=」は数学での=とどう違うの？"
+sakuya_wara:"C++では「=」は代入演算子と言われ、右の値を左に代入します"
+start:
+#include<iostream>
+
+int main()
+{
+    int a = 10;
+    int b = 20;
+    a = 30;
+    int c = a + b;
+    std::cout<<c<<std::endl;
+}
+end:
+ozyou_odo:"初期化だけでなく途中で値を代入してもいいのね"
+sakuya_oko:"その通り。またcにはaとbを足したものを代入しています"
+ozyou_oko:"絶対に初期化しないといけないの？"
+sakuya_wara:"いえ、別に初期化しなくても大丈夫です"
+sakuya_oko:"ただ代入以外のことをするには予め何らかの値を入れておいてください"
+ozyou_oko:"ふむ…"
+ozyou_wara:"ところで型ってどんだけあるの？"
+sakuya_wara:"あとで説明しますが作ろうと思ったらいくらでも作れます<br />"
+continue:"ただ基本の型というものはあります"
+start:
+int main()
+{
+    int a = 10;//4Byte整数型
+    double b = 1.23;//8Byte浮動小数点型
+    char c = 'a';//1Byte文字型
+    unsigned int d = 12345;//非負整数型
+}
+end:
+ozyou_odo:"「//」って何？"
+sakuya_odo:"あ、説明忘れてました。「//」で行端までコメントとなり無視されます"
+ozyou_wara:"4つ目は「unsigned int」で一つの型なのね"
+sakuya_wara:"そのとおりです。複数の名前の複合の型も存在します"
+ozyou_wara:"unsigned、つまり符号がないから非負整数、と"

@@ -1,0 +1,66 @@
+include:"imgdata.txt"
+title:"妖夢と幽々子が教えるGithub入門"
+yuyuko_koma:"妖夢～ちょっと来て～"
+youmu_oko:"いやです"
+yuyuko_naki:"そんなこと言わないでよ～"
+youmu_oko:"はいはい…何かお困りなことがあるんですか？"
+yuyuko_koma:"GitHubの使いかた教えて"
+youmu_koma:"は、はぁ…"
+yuyuko_koma:"ナウなヤングはGitHubでソースコード公開してるじゃない、真似したいのよ"
+youmu_koma:"ブログでいいのでは"
+yuyuko_koma:"イヤ！GitHubがいい！"
+youmu_koma:"(つらい)<br />"
+continue:"分かりましたよ、じゃあGitHubにユーザー登録しといてください、説明考えるんで"
+yuyuko_koma:"え、ユーザー登録？何？どゆこと？"
+youmu_oko:"ギッハブのページをブラウザで開いてユーザー登録するんですよ"
+yuyuko_koma:"え、あ、はい"
+youmu_oko:"(どうやるんだったかな…)"
+null:""
+yuyuko_oko:"登録してきたわ。次にどうすればいいの"
+youmu_oko:"じゃあhttps://help.github.com/articles/set-up-gitからWindows用のGitHub落としてきてください"
+yuyuko_oko:"マカーはどうすればいいの"
+youmu_oko:"Mac用ってあるでしょ、それをダウンロードですよ<br />"
+continue:"ていうかあなたWindowsでしょ、なんで気にするんですか"
+yuyuko_odo:"気になっただけよそんなに怒らないで"
+youmu_oko:"はぁ…インストール終わったらGitShell起動してください"
+yuyuko_wara:"起動したわ、どうすればいいの"
+youmu_wara:"とりあえずgit configで以下の項目を設定しといてください"
+start:
+> git config --global user.name "username"
+> git config --global user.email "useremail"
+end:
+yuyuko_koma:"なんなのこれ"
+youmu_wara:"設定しとかないとコミットメッセージにマシン名とかが残るらしいです"
+yuyuko_oko:"とりあえず設定したわ。次にどうすれば"
+youmu_oko:"webのGitHubでNew repositoryからリポジトリを作ってください"
+yuyuko_oko:"作ったわ。そして？"
+youmu_oko:"リポジトリのURLをメモしてください。そして以下のコマンドです"
+start:
+> git clone repositoryURL
+> cd repositoryname
+> git init
+end:
+yuyuko_odo:"一行ずつ解説して"
+youmu_oko:"一番上は指定のURLのディレクトリをクローンしてローカルに同じディレクトリを作ります"
+yuyuko_wara:"cdはわかるわ。ディレクトリ移動よね。"
+youmu_wara:"git initでそのディレクトリをgitのリポジトリにします"
+yuyuko_koma:"gitのリポジトリ？"
+youmu_wara:"説明面倒なんでテキトーにgitについてググってください"
+yuyuko_odo:"あ、はい"
+youmu_oko:"で、リポジトリにファイルを追加するのですが、追加するコマンドはgit addです"
+start:
+> git add "filename"
+end:
+youmu_wara:"これでこのファイルはリポジトリに追加されます。"
+youmu_oko:"そして全世界に公開したいならcommitにpush！"
+start:
+> git commit -m "commit message"
+> git push
+end:
+youmu_wara:"git commitはローカルのgitにコミットするコマンドですね< br/>"
+continue:"git pushで元のrepositoryURLにローカルのリポジトリをコピーします"
+yuyuko_wara:"なるほど、ありがとう妖夢。ところで…"
+yuyuko_oko:"説明雑じゃない？"
+youmu_naki:"普通に使うんならこれだけで十分です～"
+
+

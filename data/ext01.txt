@@ -55,12 +55,13 @@ youmu_wara:"これでこのファイルはリポジトリに追加されます。"
 youmu_oko:"そして全世界に公開したいならcommitにpush！"
 start:
 > git commit -m "commit message"
-> git push
+> git remote add origin
+> git push origin master
 end:
-youmu_wara:"git commitはローカルのgitにコミットするコマンドですね< br/>"
-continue:"git pushで元のrepositoryURLにローカルのリポジトリをコピーします"
+youmu_wara:"git commitはローカルのgitにコミットするコマンドですね<br />"
+continue:"git remote addでもとURLをremoteに追加します(説明になってない)"
+youmu_oko:"git pushで元のrepositoryURLにローカルのリポジトリをコピーします<br />"
+continue:"多分これで大丈夫だと思います"
 yuyuko_wara:"なるほど、ありがとう妖夢。ところで…"
 yuyuko_oko:"説明雑じゃない？"
 youmu_naki:"普通に使うんならこれだけで十分です～"
-
-

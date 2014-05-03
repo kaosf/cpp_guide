@@ -16,7 +16,7 @@ int main()
 end:
 sakuya_wara:"#includeなどの#で始まる命令は行が大事になってくるのですが、int main()などは改行は空白として扱われます"
 ozyou_odo:"int main(){std::cout&lt;&lt;&quot;hello world&quot;&lt;&lt;std::endl;}でもいいってこと？"
-sakuya_wara:"そのとおりです"
+sakuya_wara:"そういうことになります"
 ozyou_oko:"ところで今のところ出力だけやったよね、何かプログラムらしいことないの"
 sakuya_oko:"まずは変数の宣言です"
 ozyou_odo:"ああ、数学で出てくるあれみたいな"
@@ -93,7 +93,7 @@ ozyou_odo:"コンパイルエラーにも色々あるのね"
 sakuya_oko:"極まってくるとコンパイル中にコンパイルにつかうメモリ使い果たしてエラーになりますからね"
 ozyou_odo:"ヤバそう"
 sakuya_odo:"ヤバイ"
-ozyou_wara:"ところで二つ目のコードで「+」が出てきてるけど足し算があるなら当然掛け算、引き算、わり算もあるよね？"
+ozyou_wara:"ところで二つ目のコードで「+」が出てきてるけど足し算があるなら当然掛け算、引き算、割り算もあるよね？"
 sakuya_odo:"当然です。演算子にもいろいろありますがまずは以下の演算子が使えればいいと思います"
 start:
 int main()
@@ -129,28 +129,28 @@ int main()
     int n = 10;
     if(n < 20)
     {
-	n = 20;
+        n = 20;
     }
     else
     {
-	n = n / 2;
+        n = n / 2;
     }
 
     for(int i = 1 ; i <= 10 ; ++i)
     {
-	n += i ;
+        n += i ;
     }
 
     while(n != 1)
     {
-	n = n / 2;
+        n = n / 2;
     }
 }
 end:
 ozyou_odo:"なんじゃこの新しいキーワードのオンパレードは"
 sakuya_odo:"一つのソースコードに詰めるだけ詰めました"
 ozyou_oko:"まずifっての教えて"
-sakuya_oko;"ifの後の括弧の中がtrueならその次の{}内の文が実行、そうでない場合はelse文が実行されます"
+sakuya_oko:"ifの後の括弧の中がtrueならその次の{}内の文が実行、そうでない場合はelse文が実行されます"
 ozyou_oko:"elseはいるの？"
 sakuya_oko:"別になくても大丈夫です、使いたかったら使いましょうという話です"
 ozyou_oko:"今「true」って言ったけど、これはまた別な型なのね"
@@ -172,4 +172,96 @@ ozyou_odo:"だんだん例がテキトーになってない？"
 sakuya_naki:"考えるのが面倒くさいんですよ"
 ozyou_wara:"メイドのつらみね(？)"
 ozyou_oko:"次にforとやらを教えてもらおうかしら"
-sakuya_oko:"forは繰り返しですね。"
+sakuya_oko:"forは繰り返しですね。「;」区切りで条件を3つ指定します。"
+sakuya_wara:"一番左でこのforの中で使う変数を宣言します"
+sakuya_oko:"真ん中で繰り返しが継続される条件を指定します<br />"
+continue:"ここがtrueなら次の{}内の処理が行われます"
+sakuya_niya:"一番右は繰り返し毎に行われる処理ですね<br />"
+continue:"{}内の処理をした後この処理が行われ、2文目のチェックが入りtrueならもう一度、となります"
+ozyou_oko:"最初から2文目がfalseだったら？"
+sakuya_oko:"何も行われずfor文のループを抜けます"
+ozyou_oko:"上のソースコードでは何をしてるわけ？"
+sakuya_oko:"まずint型変数iを1で初期化して宣言してます"
+sakuya_wara:"ループ処理が終わる毎にiを1つずつ大きくしていきます"
+sakuya_niya:"iが10を超えたらループを抜けます"
+ozyou_odo:"ああ、この「++」って1大きくする処理なのか"
+sakuya_wara:"インクリメントといいますね、同様にデクリメントと言われるものもあります"
+start:
+int main()
+{
+    int i=10;
+    ++i;//11になる
+    i++;//12になる
+    --i;//11になる
+    i--;//10になる
+
+    int a = ++i;//iは11になる、aには11が代入される
+    int b = i++;//iは12になる、bには11が代入される
+}
+end:
+ozyou_odo:"変数の前に置いても後ろにおいても同じ…というわけじゃなさそうね"
+sakuya_oko:"その++iやi++自体の値をチェックする場合++iなら1増やした後の値が、i++は1増やす前の値が用意されます"
+ozyou_oko:"なるほど"
+ozyou_odo:"ところでn = n / 2みたいなことしてるけど大丈夫なの？"
+sakuya_wara:"n / 2が計算された後その値をnに突っ込んでます<br />"
+continue:"n / 2の計算結果自体はnとは別なので"
+ozyou_oko:"じゃあi = ++iとした場合はどうなるの？"
+sakuya_oko:"未定義動作です"
+ozyou_odo:"未定義…はい？"
+sakuya_oko:"C++のコンパイラはいっぱいありますが、一応国際規格というものがあって、それを準拠するように各種コンパイラは実装されてます。"
+sakuya_wara:"VC++の規格準拠度はgccやclangといったC++コンパイラとくらべて低いですが直ちに影響があるわけではないです"
+ozyou_odo:"え、じゃあその規格で未定義になってるわけ？"
+sakuya_oko:"そういうことになります<br />"
+continue:"未定義なので「突然博麗の巫女がやってきて退治される」ということが起きても文句は言えないわけです"
+sakuya_niya:"まぁ何かの処理はされますね。「白黒の魔法使いに本を盗まれる」とか"
+ozyou_odo:"未定義動作こわ、近寄らんとこ"
+ozyou_oko:"ところで「+=」って何？"
+sakuya_oko:"足して再代入ですね"
+start:
+int main()
+{
+    int i = 10;
+    i += 10;//i = i + 10;と同じ
+    i -= 15;//i = i - 15;と同じ
+    i *= 20;//i = i * 20;と同じ
+}
+end:
+ozyou_wara:"なるほどね"
+sakuya_wara:"本筋に戻ります。最後にwhile文ですね。これはforの1文目と3文目を空にしたのと同じです"
+ozyou_odo:"for文のアレ空にできるのね"
+sakuya_wara:"空文も文ですから"
+sakuya_oko:"ただし一つ違うことがあってfor文の2文目は空にできますが(trueとして扱われる)whileでは空には出来ません"
+ozyou_oko:"空にしたところでなにに使うの、無限ループになるだけじゃない"
+sakuya_oko:"for文とwhile文の{}内ではbreak文が使えます"
+start:
+int main()
+{
+    int i = 0;
+    while(true)
+    {
+        if(i == 10)
+        {
+            break;//ループを強制的に脱出する
+        }
+        ++i;
+    }
+}
+end:
+ozyou_wara:"なるほど"
+ozyou_oko:"ところで条件文のところで「2つのbool値が両方trueだったら」とか「片方がtrueだったら」とかはどうするの"
+sakuya_oko:"&amp;&amp;や||を使います"
+start:
+int main()
+{
+    bool a = true;
+    bool b = false;
+
+    bool c = (a&&b);//aとbが共にtrueならtrueを、それ以外ならfalseを結果とする、ここではfalse
+    bool d = (a||b);//aとbのどちらか一方がtrueならtrueを、共にfalseならfalseを結果とする、ここではtrue
+    bool e = (!a);//aのtrueとfalseを入れ替えたものを結果とする、ここではfalse
+}
+end:
+ozyou_odo:"そういやあたりまえだけど式の中に括弧を入れても構わないのね"
+sakuya_niya:"数学と同じく演算子にも優先順位はありますが不安なら括弧をバンバン付けるのもありだと思います"
+ozyou_wara:"これらとstd::cout出力を組み合わせてプログラム組めるわけね"
+sakuya_wara:"次回からはよりC++を便利にする機能を紹介していきます"

@@ -1,21 +1,21 @@
-���~��Ŋw��C++�����WIP�ł�
-�}�T�J��������Ȃ�e�L�g�[�ɉ��ς���Ȃ�D���ɂ��Ă�������
-�Ԉ���Ă�Ƃ��낪��������pull request�Ȃ�twitter�ŕ񍐂Ȃ��낵�����肢���܂�
-�摜�f�[�^��dairi����̗����G�f�ނ����ς��Ďg�킹�Ē����Ă܂�
-�܂�html_maker�p�̃\�[�X�R�[�h�������Ă܂�
+レミ咲で学ぶC++入門のWIPです
+マサカリ投げるなりテキトーに改変するなり好きにしてください
+間違ってるところがあったらpull requestなりtwitterで報告なりよろしくお願いします
+画像データはdairiさんの立ち絵素材を改変して使わせて頂いてます
+またhtml_maker用のソースコード同梱してます
 
-���ƁuProfessional�g���Ă�v�̌���DreamSpark�ł�(�O�̂���)
-�Ȃ�VC++��C++����Ȃ��n�̃}�T�J���͓����������邱�Ƃɂ��܂�(��X�Ή����Ă�Ǝ��Ԃ��Ȃ��Ȃ邽��)
+あと「Professional使ってる」の件はDreamSparkです(念のため)
+なおVC++はC++じゃない系のマサカリは当分無視することにします(一々対応してると時間がなくなるため)
 
-�����VC++�g���Ă܂��������̊Ԃ�gcc��clang�ł����v���Ǝv���܂�
+それとVC++使ってますが当分の間はgccやclangでも大丈夫だと思います
 
-�Q�l�ɂ����y�[�W
-prologue�F
-���ɂȂ�
-��1�́F
+参考にしたページ
+prologue：
+特になし
+第1章：
 http://ja.wikipedia.org/wiki/C%E3%81%A8C%2B%2B%E3%81%AE%E6%BC%94%E7%AE%97%E5%AD%90
-��2�́F
-���ɂȂ�
+第2章：
+特になし
 
-�ԊO�҂��̂P�F
+番外編その１：
 http://d.hatena.ne.jp/keita_yamaguchi/20080409/1207752188

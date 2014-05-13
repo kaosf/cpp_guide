@@ -1,0 +1,167 @@
+include:"imgdata.txt"
+sakuya_oko:"いよいよ今回は関数について学びます"
+ozyou_odo:"関数…数学みたいな？"
+sakuya_oko:"数学でのそれよりは条件はゆるいですね<br />"
+continue:"あちらは一組の引数に一つの値という条件がありますから"
+ozyou_odo:"じゃあなんなの？"
+sakuya_oko:"「一連の処理をまとめる仕組み」とでも今は言っておきましょうか"
+ozyou_odo:"一連の処理を…"
+sakuya_wara:"関数には2種類あります。それは「値を返す関数」と「値を返さない関数」です。まずは値を返す関数について説明します。"
+ozyou_odo:"値を…返す？"
+sakuya_wara:"色々言うべきことはあるでしょうが、とりあえず以下が値を返す関数の例となります"
+start:
+int range_sum(int x,int y)
+{
+    int ret = 0;
+    if(x > y)
+    {
+        int c = y;
+        y = x;
+        x = c;
+    }
+    for(int i = x;i <= y;++i)
+    {
+        ret += i;
+    }
+    return ret;
+}
+end:
+ozyou_odo:"なんかint main()に似てるけど…"
+sakuya_wara:"関係性は後で話します。では使い方です"
+start:
+int main()
+{
+    int x = range_sum(3,7);
+}
+end:
+ozyou_wara:"なんとなくわかったわ、ということは返り値ってのはいわば計算の結果なのね、それをreturnで指定する、と"
+sakuya_wara:"処理の結果の値のことを返り値と呼ぶ、とでもいいましょうか<br />"
+continue:"また関数に渡す値を引数といいます"
+ozyou_wara:"そこらへんは数学での関数と同じなのね"
+sakuya_wara:"関数定義の時に引数として変数を指定しますがこれを仮引数、一方実際に関数を呼び出すときに渡す値を実引数と言ったりします"
+ozyou_oko:"関数の処理内では引数は普通の変数として扱われるという認識でいいのね"
+sakuya_oko:"その通りです。また今のところ実引数の値は仮引数にコピーされて渡されることにも注意してください"
+ozyou_odo:"コピー？"
+sakuya_oko:"例えば以下のコードだと4が出力されます"
+start:
+#include<iostream>
+
+int hoge(int x)
+{
+    ++x;
+    return x;
+}
+
+int main()
+{
+    int y = 4;
+    int z = hoge(y);
+    std::cout<< y <<std::endl;
+}
+end:
+ozyou_wara:"なるほどね"
+sakuya_wara:"あと「絶対何かの値に入れなければならない」とかでもありません"
+start:
+int hoge(int x)
+{
+    return x + 2;
+}
+
+int main()
+{
+    hoge(3);
+}
+end:
+ozyou_wara:"ということは最初に言ってた「値を返さない関数」ってのはこの使い方のみの関数なのね"
+sakuya_wara:"そうなります、今は出力ぐらいなものですがそのうち違う使い方も出てきます"
+ozyou_niya:"ふむ…<br />"
+continue:"ところでint main()ってのはやっぱり関数なのね"
+sakuya_oko:"はい、これは特別な関数で、最初に呼ばれる関数ですね、エントリーポイントと言われます"
+ozyou_wara:"main関数内で別な関数を呼んでるということは関数内で関数を呼ぶのは別に構わないわけね"
+sakuya_niya:"当然許されます<br />"
+continue:"それだけではなくて自分自身を呼び出すことも許されます"
+ozyou_odo:"自分自身を…？"
+sakuya_niya:"例えばこんな感じですね"
+start:
+unsigned int fact(unsigned int n)
+{
+    if(n == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return n * fact(n - 1);
+    }
+}
+end:
+sakuya_niya:"このタイプの呼び出しは再帰呼び出しと呼ばれてます"
+ozyou_wara:"なるほどね"
+sakuya_wara:"あと関数の引数にはデフォルト値を設定することもできます"
+start:
+int hoge(int a,int b = 1)
+{
+    return a + b;
+}
+
+#include<iostream>
+int main()
+{
+    std::cout<< hoge(1,4) << std::endl;// 5 が出力される
+    std::cout<< hoge(2) <<std::endl;// 3 が出力される
+}
+end:
+sakuya_wara:"注意して欲しいのはデフォルト引数を指定する場合はその引数から後ろも全てデフォルト引数を指定する必要があります"
+ozyou_wara:"つまりint hoge(int a,int b = 1,int c = 2)はOKだけどint hoge(int a,int b = 1,int c)はダメ、と<br />"
+continue:"そういえば今まで変数は全て関数内で定義されてたけど他にないの"
+sakuya_odo:"あ、はい、それを今から説明します<br />"
+continue:"お嬢様の仰るとおり関数の外でも変数は定義できます"
+start:
+int x = 0;
+
+int sum(int y)
+{
+    ++x;
+    return x + y;
+}
+
+#include<iostream>
+int main()
+{
+    std::cout<< sum(3) <<std::endl;//4が出力される
+    std::cout<< sum(3) <<std::endl;//5が出力される
+}
+end:
+sakuya_wara:"このような関数の外で定義される変数をグローバル変数といいます<br />"
+continue:"一方関数内で定義される変数はローカル変数といいます"
+sakuya_oko:"グローバル変数はどこでも変更ができますがそれ故に読みづらいコードができる可能性もあることは忘れないで下さい"
+ozyou_odo:"読みづらいコード？"
+sakuya_oko:"ゲームやアプリなど本格的なものを作って行くとなるともちろんコードも膨大になりますがそのときグローバル変数が多用されているとデバッグのときグローバル変数の値変化を追うのが大変になります"
+ozyou_wara:"なるほど、要は「うまく使え」と"
+sakuya_wara:"C++の機能は大体が「うまく使え」に収束しますが、そういうことです"
+ozyou_wara:"関数はきちんと使えばとても楽そうね、処理の使い回しが簡単にできるし"
+sakuya_wara:"関数の使い方はこれだけでは終わりませんがそれに関しては後々"
+sakuya_oko:"それとグローバル変数の初期化はmain関数の前に行われます"
+start:
+#include<iostream>
+int hoge(int x)
+{
+    std::cout<<x<<std::endl;
+    return 2 * x;
+}
+
+int x = hoge(3);
+
+int main()
+{
+    std::cout<<"main"<<std::endl;
+}
+end:
+sakuya_oko:"この場合3が出力されたあとmainが出力されます"
+ozyou_wara:"グローバル変数の初期化→main関数なのね、なるほど"
+null:""
+ozyou_oko:"ところで咲夜、ここでコード書く時、例えば足し算なら「1 + 2」ってやってるけど「1+2」でもコンパイルできたよ"
+sakuya_wara:"スペースは見栄えのために入れてるところがあります、パッと見でスペースなしでも判別できるであろうところはスペースなしでも大丈夫だったりします"
+ozyou_oko:"あとつっこんでなかったけど#includeはファイルの先頭じゃなくてもいいのね"
+sakuya_wara:"好きなタイミングに入れることは出来ますがincludeの後じゃないとその中の機能は使えないことに注意してください"
+ozyou_oko:"はい"

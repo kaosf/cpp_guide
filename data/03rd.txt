@@ -73,10 +73,26 @@ int main()
 }
 end:
 ozyou_wara:"ということは最初に言ってた「値を返さない関数」ってのはこの使い方のみの関数なのね"
-sakuya_wara:"そうなります、今は出力ぐらいなものですがそのうち違う使い方も出てきます"
+sakuya_wara:"そうなります、今は出力ぐらいなものですがそのうち違う使い方も出てきます<br />"
+continue:"ちなみにこうなります。"
+start:
+#include<iostream>
+
+void hoge(int a)
+{
+    std::cout<< a << std::endl;
+}
+
+int main()
+{
+    hoge(3);
+}
+
+end:
 ozyou_niya:"ふむ…<br />"
 continue:"ところでint main()ってのはやっぱり関数なのね"
-sakuya_oko:"はい、これは特別な関数で、最初に呼ばれる関数ですね、エントリーポイントと言われます"
+sakuya_oko:"はい、これは特別な関数で、最初に呼ばれる関数ですね、エントリーポイントと言われます<br />"
+continue:"この関数だけは返り値を省略してもreturn 0;が自動で追加されます"
 ozyou_wara:"main関数内で別な関数を呼んでるということは関数内で関数を呼ぶのは別に構わないわけね"
 sakuya_niya:"当然許されます<br />"
 continue:"それだけではなくて自分自身を呼び出すことも許されます"

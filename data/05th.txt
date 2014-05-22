@@ -1,0 +1,99 @@
+include:"imgdata.txt"
+sakuya_wara:"今回は名前空間について説明をします"
+ozyou_oko:"名前空間とは"
+sakuya_odo:"名前空間とは…考えたこともなかった<br />"
+continue:"とりあえず名前の衝突を防ぐための機能ですね"
+ozyou_oko:"名前の衝突とは"
+sakuya_oko:"例えば複数人でプログラムを組んでいる時以下のようなprint関数を作りたいと考えます"
+start:
+void print(int n)
+{
+    std::cout<<"number:"<< n <<std::endl;
+}
+end:
+ozyou_odo:"ちょっと待った、std::coutってそんな使い方できるの"
+sakuya_oko:"出来ますよ、これは以下と同じです"
+start:
+void print(int n)
+{
+    std::cout<<"number:";
+    std::cout<< n <<std::endl;
+}
+end:
+sakuya_oko:"脇道にそれましたね、本筋に戻ります<br />"
+continue:"上のprint関数がある状態で別の人がまたprint関数を以下のように実装したとします"
+start:
+void print(int n)
+{
+    std::cout<<"this is "<< n <<std::endl;
+}
+end:
+ozyou_oko:"引数の型が同じだからオーバーロードでもないわね"
+sakuya_oko:"重複定義でエラーになりますね<br />"
+continue:"それを防ぎたい。ならどうするか。こうします"
+start:
+namespace saku
+{
+    void print(int n)
+    {
+        std::cout<<"number:"<< n <<std::endl;
+    }
+}
+
+namespace remi
+{
+    void print(int n)
+    {
+        std::cout<<"this is "<< n <<std::endl;
+    }
+}
+
+int main()
+{
+    int x = 10;
+
+    sakuya::print(x);
+    remi::print(x);
+}
+end:
+ozyou_wara:"ふむ、関数名などに大まかな分類分けができるわけね<br />"
+continue:"グローバル変数などにも適用できるの？"
+sakuya_wara:"もちろんですよ"
+ozyou_wara:"そういえばstd::coutなどはnamespace std内にあるの？"
+sakuya_wara:"はい、C++の標準ライブラリは基本的に全てnamespace std内で定義されてます"
+ozyou_oko:"でも一々stdって打つのは面倒なんだけど"
+sakuya_oko:"namespaceに関連してusingディレクティブというものがあります"
+start:
+using namespace std;
+
+namespace kouma
+{
+    using namespace std;
+}
+
+int main()
+{
+    cout<<"poyo"<<endl;
+
+    kouma::cout<<"poyopoyo"<<kouma::endl;
+}
+end:
+sakuya_oko:"using namespace Xをnamespace Y内で使用するとXの中身はYにも属することになります<br />"
+continue:"それに関連して非namespaceな部分をグローバルスコープと言ったりします"
+sakuya_niya:"またusing宣言というものもあります"
+start:
+namespace poyo
+{
+    using std::cout;
+}
+
+int main()
+{
+    poyo::cout<<"poyo"<<std::endl;
+}
+end:
+sakuya_niya:"つまりstd::coutはnamespace poyoにも属することになるというわけです"
+ozyou_wara:"ふむ、後者はともかく前者は便利そうね"
+sakuya_oko:"ただし注意していただきたいのはnamespaceは名前被り対策のための機能なのでusing namespaceはそれに対する叛逆です"
+sakuya_wara:"ていうかVC++だと入力補完でstd::まで打てば探せますし一々using namespace std;するのも面倒な気もしますが"
+ozyou_wara:"使いどころ注意ってやつね、気をつけるわ"

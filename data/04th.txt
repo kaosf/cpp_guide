@@ -1,0 +1,56 @@
+include:"imgdata.txt"
+sakuya_oko:"前回関数について大切なことを2ついうの忘れてました"
+ozyou_oko:"忘れないで頂戴"
+sakuya_oko:"C++は機能が多すぎて忘れてしまうのです"
+ozyou_oko:"言い訳はいいから説明しなさい"
+sakuya_odo:"あ、はい。まずは関数の多重定義(オーバーロード)です"
+ozyou_oko:"多重定義？"
+sakuya_wara:"関数の名前は同名なのにも関わらず引数の型によって別の実装ができる機能です"
+ozyou_odo:"型で別実装？例を示して"
+sakuya_wara:"はい"
+start:
+int square(int n)
+{
+    return n * n;
+}
+
+double square(double n)
+{
+    return n * n;
+}
+
+int main()
+{
+    auto x = square(2);//xはint型
+    auto y = square(1.9);//yはdouble型
+}
+end:
+ozyou_wara:"ふむ、引数の型でどれを呼び出すかコンパイラが判断するわけね"
+sakuya_wara:"ある関数に引数が渡されているとき、その名前の関数の内引数の種類に対して最適であるものが呼び出されます"
+ozyou_wara:"なんか使えそうね"
+sakuya_wara:"使えますよいろいろと"
+ozyou_oko:"で、もうひとつは？"
+sakuya_wara:"関数のプロトタイプ宣言です"
+ozyou_odo:"プロトタイプ宣言？"
+sakuya_wara:"関数がとりあえずあることを前もって宣言する方法ですね"
+start:
+int square(int x);
+
+int cube(int x)
+{
+    return x * square(x);
+}
+
+int square(int x)
+{
+    return x * x;
+}
+end:
+ozyou_wara:"とりあえず存在することはわかってるから呼び出されるわけか"
+sakuya_wara:"プロトタイプ宣言だけして実装しなかったらエラーになりますね"
+ozyou_odo:"コンパイルエラー？"
+sakuya_oko:"リンクエラーですね"
+ozyou_odo:"リンクエラーis"
+sakuya_oko:"後に「分割コンパイル」を説明するときに一緒に説明します<br />"
+continue:"ようは「実装ないぞこらぁ」って話ですね"
+ozyou_oko:"なるほど"

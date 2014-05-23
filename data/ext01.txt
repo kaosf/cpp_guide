@@ -54,7 +54,7 @@ end:
 marisa_wara:"commitってのは要はその状態を一つのバージョンとするコマンドだな<br />"
 continue:"メッセージはその変更点についてのメッセージだな"
 yuyuko_wara:"とりあえずその状態にいつでも戻せるってこと？"
-marisa_wara:"まぁそういうことになるな< br/>"
+marisa_wara:"まぁそういうことになるな<br />"
 continue:"で、いよいよpushだ！"
 start:
 > git push

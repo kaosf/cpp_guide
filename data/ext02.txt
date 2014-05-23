@@ -1,0 +1,61 @@
+include:"imgdata.txt"
+title:"霊夢魔理沙幽々子の楽しいpowershell"
+reimu_oko:"結局おるのな"
+yuyuko_wara:"クビにはなりたくないもの"
+marisa_wara:"今回はC++に限らずプログラミングするなら、ていうかプログラミングしなくても知っておきたい「powershellの使い方」だ"
+reimu_odo:"プログラミングしなくても便利に？"
+marisa_wara:"当然だ！まずは基本中の基本からだ"
+start:
+>cd DirectoryName
+>cd..
+end:
+reimu_oko:"cdはだれでも知っとるわい"
+yuyuko_wara:"DirectoryNameが相対パスで現在のディレクトリのサブディレクトリ、絶対パスで直接移動、cd..で一個上のディレクトリに移動ね"
+marisa_wara:"コピーとムーブはこうだ"
+start:
+>cp filename directoryname
+>move filename directoryname
+end:
+marisa_wara:"ディレクトリネームの部分はファイルネームでも良い、その場合はその名前になってコピーされたり移動されたりするぜ"
+yuyuko_koma:"しかしまとめてコピーするならエクスプローラー開いたほうが早いわね"
+marisa_wara:"おーとちょっと待て！cpコマンドには正規表現が使える！"
+start:
+>cp *.hpp sub
+>cp *.cpp C:/cpp
+end:
+reimu_wara:"「*.拡張子」でその拡張子のファイルをまとめてコピーできるのね"
+marisa_wara:"ディレクトリを作りたい時はmkdirだ！"
+start:
+>mkdir hoge
+end:
+marisa_wara:"ファイルを消したいならdel！"
+start:
+>del hoge.hpp
+end:
+marisa_wara:"現在のディレクトリのファイルを列挙したい！ならlsだ！"
+start:
+>ls
+end:
+marisa_wara:"ところでプログラム中の標準出力先を変えたい時がある！その場合はパイプラインが有効だ！"
+start:
+>myprogram > test.txt
+end:
+reimu_odo:"標準出力がされずにファイルに出力された！"
+marisa_wara:"powershellに関連して環境変数の設定もオススメできる！<br />"
+continue:"ローカルのgithubのディレクトリを設定するのはもちろん定番だ！"
+start:
+>set-variable GITHUB C:/Users/MarisaKirisame/Documents/GitHub
+>cd $GITHUB
+end:
+marisa_wara:"$pathにディレクトリを追加すればそのディレクトリ内のprogramはコマンドと同じように呼び出せたりもするぜ"
+start:
+>$Env:path+="directoryname"
+>program
+end:
+marisa_wara:"当然だがもっと便利な使い方はあるがそれは各自調べてくれ！"
+reimu_wara:"わかったわ"
+yuyuko_wara:"なるほどね"
+null:""
+reimu_oko:"ところでなんで今日こんなにテンション高いの"
+marisa_shobo:"なんでだろうな"
+yuyuko_oko:"あのさぁ…"

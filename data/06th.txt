@@ -1,0 +1,194 @@
+include:"imgdata.txt"
+sakuya_wara:"今回からはいよいよクラスについてやっていきます"
+ozyou_wara:"わーいクラスー"
+ozyou_oko:"is何"
+sakuya_wara:"クラスとは変数や関数が集まって新しい型を作る機能ですね<br />"
+continue:"まぁ口で説明するのも面倒ですからまずはコードを"
+start:
+namespace sakuya
+{
+    class test
+    {
+    private:
+        int x_;
+        double y_;
+    public:
+        void x_set(int x)
+        {
+            x_ = x;
+        }
+        void y_set(double y)
+        {
+            y_ = y;
+        }
+
+        int x_get()
+        {
+            return x_;
+	}
+	int y_get()
+	{
+	    return y_;
+        }
+    };
+}
+
+#include<iostream>
+
+int main()
+{
+    sakuya::test hoge;
+    
+    hoge.x_set(10);
+    hoge.y_set(2.0);
+
+    std::cout << hoge.x_get() << std::endl;
+    std::cout << hoge.y_get() << std::endl;
+}
+end:
+sakuya_wara:"コード見て自分で判断しろ、ていうのは酷なので一つずつ説明します<br />"
+continue:"まずクラスにはprivateなメンバとpublicなメンバがあります"
+ozyou_wara:"確かにprivateとpublicってあるね"
+sakuya_wara:"private:以下のメンバはprivateメンバに、public:以下のメンバはpublicメンバになります"
+ozyou_wara:"privateとpublicの違いは？"
+sakuya_wara:"publicなメンバは外部から呼び出すことが出来ます<br />"
+continue:"上の例ではmain関数内で読んでますね"
+ozyou_wara:"privateなメンバは外部からは呼び出せないわけね<br />"
+continue:"自分のメンバ関数内からは呼び出せると"
+sakuya_wara:"自分のメンバ関数内ではそれがグローバル変数や通常の関数であるかのように扱えます"
+ozyou_wara:"確かにx_set関数内ではx_はあたかもグローバル変数であるかのように書かれてるね"
+sakuya_wara:"ちなみにprivateメンバですが「同じクラスのメンバとfriend指定されたクラスか関数からのみ使える」という制限です"
+sakuya_niya:"つまり以下のことができます"
+start:
+namespace sakuya
+{
+    class test
+    {
+    private:
+        int x_;
+
+    public:
+	void add(test arg)
+	{
+	    x_ += arg.x_;
+	}
+        friend int get(test arg);
+	friend class test2;
+    };
+
+    int get(test arg)
+    {
+        return arg.x_;
+    }
+}
+end:
+ozyou_odo:"friendで指定したgetはメンバ関数じゃないのね"
+sakuya_niya:"そういうことになりますね<br />"
+continue:"上の例でいけばgetはメンバ関数じゃないですしtest2は普通のクラスです"
+ozyou_niya:"クラスの中にクラスを書けるとでも言いたそうね"
+sakuya_niya:"事実書けるのだから仕方ありません、こう書きます"
+start:
+namespace sakuya
+{
+    class test
+    {
+    public:
+        class test2
+	{
+        public:
+	    int x_;
+	};
+    };
+}
+int main()
+{
+    sakuya::test::test2 hoge;
+    hoge.x_ = 10;
+}
+end:
+sakuya_niya:"クラス内クラスはそのクラスに属しているものですからメンバ変数などとは使い方が違います"
+ozyou_niya:"クラス自体に属しているもの、他にあるんじゃないの？"
+sakuya_niya:"よくわかりましたね、staticメンバです"
+start:
+namespace sakuya
+{
+    class test
+    {
+    public:
+        static int x_;
+	static int add(int arg)
+	{
+	    x_ += arg;
+	    return x_;
+	}
+
+	void set(int arg)
+	{
+	    x_ = arg;
+	}
+    };
+    int test::x_;
+}
+
+int main()
+{
+    sakuya::test hoge;
+    hoge.set(10);
+
+    hoge.add(5);
+    test::x_ = 20;
+}
+end:
+ozyou_wara:"なんか無茶苦茶なことやってるけどなんとなくわかるわ"
+sakuya_oko:"一つ注意していただきたいのはstaticなメンバ変数はその時点では宣言しかなされてないので別に定義する必要があります"
+ozyou_oko:"クッソ面倒くさいね"
+sakuya_oko:"せやな"
+ozyou_wara:"宣言のみ、で思い出したけどメンバ関数のプロトタイプ宣言はどうするの"
+sakuya_wara:"大して変わりませんよ、こうです"
+start:
+namespace sakuya
+{
+    class test
+    {
+    public:
+        int hoge(int x);
+    };
+    
+    int test::hoge(int x)
+    {
+        return 2 * x;
+    }
+}
+end:
+ozyou_wara:"testのhogeって関数という感じでいけるのね、なるほど<br />"
+continue:"そういえばメンバ関数に対してメンバ関数じゃない関数はなんて言うの"
+sakuya_wara:"よく言われる言い方では「フリー関数」ですね、クラスからの束縛からフリー的な？"
+ozyou_wara:"関数は出来る限りクラスに属してた方がいいの？"
+sakuya_wara:"いえ、C++ではむしろその逆で「フリー関数にすべき」とよく言われています"
+ozyou_wara:"一々変数宣言するの面倒だしstatic関数にするぐらいならフリー関数にしたほうが早いし何よりnamespaceがあるから役割毎に分けるのも容易だし？"
+sakuya_wara:"当然メンバ関数の方がよい時はありますがメンバ変数を使わなかったりするときはフリー関数の方がいいという話です"
+sakuya_niya:"namespaceなら関数の追加は楽ですしね"
+sakuya_wara:"ちなみにstaticメンバ関数はprivateメンバにアクセスできるのでそういう方面での使い道があります"
+ozyou_wara:"そういえばprivateとかpublicとか指定しない場合はどうなるの"
+sakuya_wara:"その場合はデフォルトでprivateになります<br />"
+continue:"そうそう、それに関連してstructというものもあります"
+start:
+namespace sakuya
+{
+    struct test
+    {
+        int x_;
+	int add(int arg)
+	{
+	    x_ += arg;
+	}
+    };
+}
+end:
+sakuya_wara:"デフォルトがpublicであることを除けばclassと同じです、一々publicと書くのが面倒なときにお使いください"
+ozyou_wara:"なんでほぼ同じ意味のものが2つ存在するの"
+sakuya_wara:"structはC言語の時代からありました、単純に変数をまとめるものでしたが"
+ozyou_wara:"あー互換性のために保持を"
+sakuya_wara:"そういうことになります<br />"
+continue:"ちなみにpublicやprivateはアクセス指定子といいます"
+ozyou_wara:"なるほど"

@@ -97,7 +97,7 @@ void hoge()
     test value;
     std::cout<<"関数やで"<<std::endl;
 }
-endl:
+end:
 sakuya_wara:"関数が呼ばれた時当然valueが生成されるのでコンストラクタが呼ばれます"
 ozyou_wara:"そのあと「関数やで」って出力されるのね"
 sakuya_wara:"関数を抜ける時valueは使えなくなりますよね"

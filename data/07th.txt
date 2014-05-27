@@ -1,0 +1,180 @@
+include:"imgdata.txt"
+ozyou_oko:"クラスの初期化についてですが"
+sakuya_oko:"？"
+ozyou_oko:"一々メンバ変数にアクセスとかメンバ関数呼び出しとか忘れそうだしintみたいに定義と同時に初期化したいんです"
+sakuya_wara:"せやな、というわけで今回はコンストラクタやります"
+ozyou_wara:"コンストラクタ！なんか建設的ですね"
+sakuya_wara:"いつも通りソースコードです"
+start:
+namespace sakuya
+{
+    class test
+    {
+        int x_;
+	int y_;
+    public:
+        test(int x,int y):x_(x),y_(y){}
+	test():x_(0),y_(0){}
+    };
+}
+
+int main()
+{
+    sakuya::test value(10,5);
+    sakuya::test value2;
+}
+end:
+ozyou_oko:"前回言い忘れてたけど一々namespace sakuyaに入れなくていいから"
+sakuya_odo:"あ、はい"
+sakuya_wara:"さて、コンストラクタの宣言はそのクラス名と同じですが返り値の型はつけません<br />"
+continue:"変数の宣言時に()で変数を指定してコンストラクタを呼び出します"
+ozyou_wara:"コンストラクタの宣言と実装の間に:x_(x),y_(y)とあるのは？"
+sakuya_wara:"メンバ変数の初期化ですね、x_とy_がそれぞれx,yで初期化されたあとコンストラクタの中身が処理されます"
+ozyou_wara:"コンストラクタもオーバーロードできるのね、引数無しのコンストラクタは？"
+sakuya_wara:"value2のように()なしで宣言した場合に呼び出されるコンストラクタですね"
+sakuya_oko:"一つ以上のコンストラクタが定義されていて引数なしのコンストラクタが定義されてない場合value2の宣言はコンパイルエラーになります"
+ozyou_oko:"じゃあメンバ変数にユーザー定義の型の変数が含まれている場合の初期化方法は？"
+sakuya_oko:"一緒ですよ、こうです"
+start:
+class test
+{
+    int x_;
+    int y_;
+public:
+    test(int x=0,int y=0):x_(0),y_(0){}
+};
+
+class test2
+{
+    test u_;
+    test v_;
+public:
+    test2(int x0,int y0,int x1,int y1)
+        :u_(x0, y0),v_(x1, y1){}
+};
+
+int main()
+{
+    test value;
+    test2 value2(1,2,3,4);
+}
+end:
+ozyou_wara:"コンストラクタにデフォルト引数を与えて引数なしで呼び出せるようにすれば()なしで宣言できるのね"
+sakuya_wara:"そういうことですね"
+ozyou_wara:"ん、ていうことはこういうことが可能ってこと？"
+start:
+int main()
+{
+    int x(10);
+    double y(2.0);
+}
+end:
+sakuya_wara:"そうですね、そういうことになります"
+sakuya_niya:"これはコピーコンストラクタに関連してるんですけどね"
+ozyou_wara:"コピーコンストラクタis"
+sakuya_wara:"コピーする時に呼ばれるコンストラクタですね、これはまだ説明してない要素が絡むのであとで説明します"
+ozyou_oko:"なんでそれを先に説明しない"
+sakuya_oko:"私の判断です"
+ozyou_odo:"説明になってない"
+sakuya_oko:"ところでコンストラクタに関連してデストラクタというものがあります"
+start:
+#include<iostream>
+class test
+{
+public:
+    test(){std::cout<<"コンストラクタやで"<<std::endl;}
+    ~test(){std::cout<<"デストラクタやで"<<std::endl;}
+};
+end:
+ozyou_wara:"メッセージが関西弁なのが笑える<br />"
+continue:"~(クラス名)で宣言できるのね"
+sakuya_wara:"デストラクタは引数を指定できません、したがってオーバーロードも不可です"
+ozyou_wara:"いつ呼ばれるの"
+sakuya_wara:"変数が破棄される時ですね、例えば以下の関数があります"
+start:
+void hoge()
+{
+    test value;
+    std::cout<<"関数やで"<<std::endl;
+}
+endl:
+sakuya_wara:"関数が呼ばれた時当然valueが生成されるのでコンストラクタが呼ばれます"
+ozyou_wara:"そのあと「関数やで」って出力されるのね"
+sakuya_wara:"関数を抜ける時valueは使えなくなりますよね"
+ozyou_wara:"そりゃローカルなんだからね"
+sakuya_wara:"当然破棄されるわけです"
+ozyou_wara:"その時に呼ばれるわけね"
+sakuya_wara:"まぁそういうことですね、他にもありますが"
+ozyou_oko:"破棄される時に処理をして何が嬉しいの"
+sakuya_oko:"やはり後々やる要素が大きく関わってきますね"
+ozyou_oko:"なによ、いつもいつも後回し"
+sakuya_oko:"ではヒントだけ言っておきます。「デストラクタは明示的に呼ぶ必要がない」です"
+ozyou_oko:"うー納得出来ない"
+sakuya_oko:"現状ではここまでしか言えないんですよ"
+sakuya_wara:"ところで初期化は{}を使うことも出来ます"
+start:
+class test
+{
+    int x_;
+    int y_;
+public:
+    test(int x,int y):x_(x),y_(y){}
+    test():x_(0),y_(0){}
+};
+
+int main()
+{
+    test hoge{1,2};
+    test hoge2{};
+}
+end:
+sakuya_wara:"明示的に引数なしのコンストラクタが呼び出せます"
+ozyou_wara:"test hoge()じゃダメなの？"
+sakuya_wara:"関数のプロトタイプ宣言と見分けがつかないのでダメです"
+ozyou_wara:"そういう書き方も出来るよって話？"
+sakuya_oko:"いえ、これ割と重要な事です、以下のコードを見てください"
+start:
+int main()
+{
+    int x;
+    std::cout<< x <<std::endl;
+}
+end:
+ozyou_wara:"初期化されてないね"
+sakuya_wara:"初期化されてない状態で出力しようとしてるのでコンパイルエラーになります。次に以下のコードを見てください"
+start:
+int main()
+{
+    int x{};
+    std::cout<< x <<std::endl;
+}
+end:
+ozyou_odo:"え、これ通るの？"
+sakuya_wara:"通るんですよこれが、xは0に初期化されます<br />"
+continue:"もう一つコンストラクタで言うべきことがあります、以下を見てください"
+start:
+int main()
+{
+    auto x = test(1,2);
+    auto y = int();
+}
+end:
+ozyou_wara:"ふむ、型名をそのまま関数にすることができるのね"
+sakuya_wara:"その初期値でコンストラクトしたものがそのまま返されます"
+ozyou_wara:"int()はint x{};の時と同様0で初期化されたint型変数なのね"
+sakuya_wara:"あとですね、コンストラクタは明示的に削除できます"
+start:
+class test
+{
+public:
+    test() = delete;
+};
+end:
+sakuya_wara:"使おうとしたら「これは削除されてます」って怒られます"
+ozyou_wara:"ふーん、これも後で使うの？"
+sakuya_wara:"使います"
+ozyou_wara:"まぁ楽しみにしとくわ"
+null:""
+sakuya_wara:"ほんとはもっと言いたいことがあったんですが思った以上に大量の要素があったんで省略しています"
+ozyou_wara:"つらみだね"
+sakuya_wara:"いつかどこかで補完したいものです"

@@ -25,10 +25,10 @@ namespace sakuya
         int x_get()
         {
             return x_;
-	}
-	int y_get()
-	{
-	    return y_;
+        }
+        int y_get()
+        {
+            return y_;
         }
     };
 }
@@ -68,12 +68,12 @@ namespace sakuya
         int x_;
 
     public:
-	void add(test arg)
-	{
-	    x_ += arg.x_;
-	}
+        void add(test arg)
+        {
+            x_ += arg.x_;
+        }
         friend int get(test arg);
-	friend class test2;
+        friend class test2;
     };
 
     int get(test arg)
@@ -94,10 +94,10 @@ namespace sakuya
     {
     public:
         class test2
-	{
+        {
         public:
-	    int x_;
-	};
+            int x_;
+        };
     };
 }
 int main()
@@ -116,16 +116,16 @@ namespace sakuya
     {
     public:
         static int x_;
-	static int add(int arg)
-	{
-	    x_ += arg;
-	    return x_;
-	}
+        static int add(int arg)
+        {
+            x_ += arg;
+            return x_;
+        }
 
-	void set(int arg)
-	{
-	    x_ = arg;
-	}
+        void set(int arg)
+        {
+            x_ = arg;
+        }
     };
     int test::x_;
 }
@@ -178,10 +178,10 @@ namespace sakuya
     struct test
     {
         int x_;
-	int add(int arg)
-	{
-	    x_ += arg;
-	}
+        int add(int arg)
+        {
+            x_ += arg;
+        }
     };
 }
 end:

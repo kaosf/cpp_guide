@@ -1,0 +1,207 @@
+include:"imgdata.txt"
+sakuya_oko:"例えば以下の関数があります"
+start:
+int max(int a,int b)
+{
+    return (a < b ? b : a);
+}
+end:
+ozyou_oko:"2つの引数の内大きい方を返す関数ね"
+sakuya_oko:"当然ですがintだけでなくdoubleにも欲しいわけです"
+start:
+double max(double a,double b)
+{
+    return (a < b ? b : a);
+}
+end:
+ozyou_oko:"当然他の型にも欲しいね"
+sakuya_oko:"ユーザー定義型に対して一々対応してるときりがないわけです"
+ozyou_oko:"自動で作って欲しい"
+sakuya_oko:"そこで今回はtemplateを紹介するわけです。templateにはクラスと関数の2種類が存在します"
+start:
+template<class T>class test
+{
+    T value_;
+public:
+    test(T v):value_(v){}
+    test():value_(){}
+
+    T get(){return value_;}
+}
+
+template<class T>bool operator<(test<T> a,test<T> b)
+{
+    return a.get() < b.get();
+}
+
+#include<iostream>
+int main()
+{
+    test<int> x(10),y(5);
+    std::cout<< (x < y) <<std::endl;
+    test<double> a(2.0),b(3,0);
+    std::cout<< (x < y) <<std::endl;
+}
+end:
+sakuya_wara:"型、もしくはコンパイル時整数定数を引数にとり、それをクラスや関数に組み込んでクラスや関数を作る機能です"
+ozyou_wara:"クラスの場合は<>で型とかを指定するのね"
+sakuya_wara:"関数の時も普通は<>で指定するのですが関数の場合はテンプレート引数が推論できる場合は推測してくれます"
+start:
+template<class T>T max(T a,T b)
+{
+    return (a < b ? b : a);
+}
+
+int main()
+{
+    int x = max<int>(3,4);//明示的に渡している
+    test<double> a(1.0),b(2.0);
+    auto y = max(a,b);//test<double>であると判断してmax<test<double>>を呼んでくれている
+}
+end:
+ozyou_wara:"めっちゃ便利っぽい"
+sakuya_wara:"C++をC++たらしめてるファクターの一つですからね、めちゃくちゃ強力ですよ<br />"
+ozyou_wara:"コンパイル時整数定数を引数に取るとは？"
+sakuya_wara:"文字通りですよ、こんな感じです"
+start:
+template<unsigned int N>class test
+{
+    int elem_[N];
+public:
+    test()
+    {
+        for(int i=0;i < N;++i)
+        {
+            elem_[i] = 2 * i;
+        }
+    }
+
+    int operator(unsigned int i)
+    {
+        return elem_[i];
+    }
+};
+
+int main()
+{
+    test<4> hoge;
+    test<10> piyo;
+}
+end:
+ozyou_wara:"なるほど<br />"
+continue:"ところでコンパイル時定数の条件は？"
+sakuya_wara:"「数値直打ち」か「定数式で初期化されたconst定数」ですね"
+start:
+const int a = 10;//数値直打ちはコンパイル時定数
+const int b = 10 + 20;//コンパイル時定数同士の加減乗除などは定数式
+template<int N>struct const_num
+{
+    static const int c = N;//Nはコンパイル時定数しか許されない、当然cもコンパイル時定数
+};
+const int d = const_num<10>::c - const_num<5>::c;//それぞれ違う型なので違う定数
+int main()
+{
+    const int x = a + d;//関数内でも定数式ならコンパイル時定数
+}
+end:
+sakuya_wara:"加減乗除っていうか演算子なら大体定数式ですね、詳しい条件は書く気が起きませんが"
+ozyou_odo:"あれ、staticメンバって宣言と定義が別々では？"
+sakuya_wara:"static constなメンバを定数式で初期化する場合はこういうことが出来ます"
+ozyou_wara:"そういや型引数がintのときだけ実装を変えるとかできないの"
+sakuya_wara:"できますね、テンプレートの特殊化といいます"
+start:
+template<class T,int N>struct test
+{
+    T value;
+    static const int value2 = N;
+};
+template<class T>struct test<T,0>
+{
+    T value;
+    static const int value2 = 0;
+    double special;
+};
+template<>struct test<int,0>
+{
+    int value;
+    static const int value2 = 0;
+    double special;
+    double super;
+};
+
+template<int N>int test2()
+{
+    return N;
+}
+template<>int test2<42>()
+{
+    return 100;
+}
+end:
+sakuya_wara:"クラスの場合は一部の引数を固定して特殊化できますが関数の場合は完全な特殊化のみ有効です"
+ozyou_wara:"ほークラスの特殊化ねー"
+ozyou_oko:"…まって、ていうことは…"
+start:
+template<unsigned int N>struct fact
+{
+    static unsigned int value = fact<N-1>::value * N;
+};
+template<>struct fact<0>
+{
+    static unsigned int value = 1;
+};
+end:
+sakuya_oko:"君のような勘のいいガキは嫌いだよ"
+ozyou_oko:"こう見えても500歳なのですが"
+sakuya_oko:"はい"
+ozyou_odo:"ひえー再帰関数書けるよー"
+sakuya_wara:"そこに気づいてしまったということは闇の扉を開いてしまったということです<br />"
+continue:"このテクニックをTemplate Meta Programming、通称TMPといいます"
+ozyou_tere:"TMP…なにか卑猥な響きね"
+sakuya_tere:"そのうちTMPと聞いてこっちしか思い浮かばなくなります"
+ozyou_wara:"異常者の道ね"
+sakuya_wara:"TMPはなにより型に関する操作ができるので普通では思いつかないような変態的なことができます"
+ozyou_oko:"結構です"
+sakuya_wara:"異常者…じゃなかったC++界隈の危ない…もといすごい人達がTMPを駆使した便利なライブラリが世の中に結構あるので直接触らずとも恩恵は受けれます"
+ozyou_wara:"ふむふむ、餅は餅屋ってやつね<br />"
+continue:"そういや一つ質問があるんだけど"
+start:
+template<class T>T max(T a,T b)
+{
+    return (a < b ? b : a);
+}
+end:
+ozyou_wara:"Tでoperator<が使える場合はいいけど使えない場合はどうなるの？"
+sakuya_wara:"そうですね、SFINAEについて話すべき時が来たようですね"
+ozyou_wara:"SFINAE？"
+sakuya_wara:"Substitution Failure Is Not An Errorの略ですね<br />"
+continue:"文字通り「置き換え失敗はエラーじゃない」ということです"
+ozyou_odo:"？？？？？？？？？"
+sakuya_wara:"つまりですね、置き換えようとして存在しないメンバ関数にアクセスしようとしたりした場合オーバーロード解決から外れるということです"
+ozyou_odo:"コンパイルエラーにならないってこと？"
+sakuya_wara:"普通はコンパイルエラーになりますが状況によってはコンパイルエラーにならないときがあります。以下のコードを見てください"
+start:
+#include<type_traits>
+#include<iostream>
+template<int N> typename std::enable_if<(N<0),void>::type test()
+{
+    std::cout<<"負やで"<<std::endl;
+}
+template<int N> typename std::enable_if<(N>0),void>::type test()
+{
+    std::cout<<"正やで"<<std::endl;
+}
+template<int N> typename std::enable_if<(N==0),void>::type test()
+{
+    std::cout<<"0は自然数！"<<std::endl;
+}
+end:
+sakuya_wara:"std::enable_ifはtype_traits内のテンプレートクラスで、bool型コンパイル時定数と型を引数にとり、前者がtrueの時だけメンバ型typeが設定されます"
+ozyou_wara:"Nは0未満か0より大きいか0かのどれかだから他の2つはfalseでSFINAEが働いてオーバーロード解決から除去、一つだけそのまま通るというわけね"
+sakuya_wara:"type_traitsにはいろいろenable_ifに使えるテンプレートクラスなどがあるので調べてみるのもありですよ"
+ozyou_wara:"ふむ"
+sakuya_wara:"なお型テンプレート引数のメンバ型はtypenameを前に置く必要があります、これがないとstatic変数としてみなされます"
+ozyou_wara:"コンパイラが判断できないってやつね"
+sakuya_wara:"最後になりますがtemplateでもデフォルト引数は使えます<br />"
+continue:"std::enable_ifは第二引数がデフォルトでvoidだったりします"
+ozyou_wara:"なるほどなぁ"

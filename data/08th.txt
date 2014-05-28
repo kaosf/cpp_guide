@@ -1,0 +1,180 @@
+include:"imgdata.txt"
+sakuya_oko:"例えば以下のクラスがあります"
+start:
+class vector
+{
+    int x_;
+    int y_;
+public:
+    vector(int x,int y):x_(x),y_(y){}
+    vector():x_(0),y_(0){}
+
+    int x(){return x_;}
+    int y(){return y_;}
+};
+end:
+sakuya_oko:"当然ベクトル同士の足し算の関数が欲しいわけですが"
+start:
+vector vector_add(vector v,vector u)
+{
+    return vector(v.x()+u.x(),v.y()+u.y());
+}
+end:
+ozyou_wara:"普通ね"
+sakuya_oko:"しかしやっぱり足し算なんだから+を使いたいわけです"
+ozyou_wara:"なるほど、今回は演算子を自分で定義する話なわけね"
+sakuya_wara:"多くの演算子はオーバーロードできます。演算子のオーバーロードはメンバ関数としてのオーバーロードとフリー関数としてのオーバーロードがあります"
+start:
+class vector
+{
+    int x_;
+    int y_;
+public:
+    vector(int x,int y):x_(x),y_(y){}
+    vector():x_(0),y_(0){}
+
+    int x(){return x_;}
+    int y(){return y_;}
+
+    vector operator++()
+    {
+        ++x_;
+        ++y_;
+        return vector(x_,y_);
+    }
+};
+
+vector operator+(vector u,vector v)
+{
+    return vector(v.x()+u.x(),v.y()+u.y());
+}
+end:
+ozyou_wara:"なるほど、operatorの後にオーバーロードしたい演算子を持ってきて定義する、と"
+sakuya_wara:"当然ですが演算子の使い方は変わりません"
+start:
+int main()
+{
+    vector a(1,2);
+    vector b(2,3);
+    ++a;
+    auto c = a + b;
+}
+end:
+sakuya_oko:"演算子には4種類あります。まず単項演算子"
+start:
+int main()
+{
+    int x(10);
+    ++x;
+}
+end:
+sakuya_oko:"次に二項演算子"
+start:
+int main()
+{
+    int x(10),y(5);
+    int z = x + y;
+}
+end:
+sakuya_oko:"そして三項演算子、C++においては条件演算子だけですね"
+start:
+int main()
+{
+    int x=10;
+    int y = (x < 5 ? 5 : x);
+}
+end:
+sakuya_oko:"最後にその他の演算子です"
+start:
+int piyo()
+{
+    return 42;
+}
+
+int main()
+{
+    int x = piyo();
+}
+end:
+ozyou_oko:"条件演算子とは"
+sakuya_oko:"a ? b : cの形でaがtrueならbが、falseならcが返される演算子です"
+ozyou_oko:"最後の例はどれが演算子なのかしら"
+sakuya_oko:"関数呼び出しの()も、代入の=も、演算子です"
+start:
+class call_able
+{
+    int value_;
+public:
+    call_able(int v = 0):value_(v);
+    int operator()(){return ++value_;}
+    call_able operator=(int value)
+    {
+        value_ = value;
+        return call_able(value_);
+    }
+};
+
+int main()
+{
+    call_able func_like{};
+    int x = func_like();
+
+    func_like = 10;
+    int y = func_like();
+}
+end:
+ozyou_odo:"いや、あのですね"
+sakuya_wara:"関数っぽいオブジェクトが作れますし違う型の値を代入したりも出来ます"
+ozyou_oko:"関数っぽいオブジェクトを作って何が嬉しいの"
+sakuya_oko:"関数っぽいオブジェクトは普通に関数オブジェクトと呼ばれていますが、結構重要ですよこれ<br />"
+continue:"普通にオブジェクトとして扱いながら関数としても扱える、など使い道は多用です"
+ozyou_oko:"ふむ…"
+sakuya_oko:"演算子にはオーバーロードできるものとできないものがあります、例えば条件演算子はオーバーロード不可能です"
+ozyou_wara:"2つ質問。まず後置インクリメントはオーバーロードできるの？"
+sakuya_wara:"できますよ"
+start:
+#include<iostream>
+class test
+{
+    int n_;
+public:
+    test():n_(0){}
+    
+    int operator++(int)
+    {
+        std::cout<<"後置インクリメントやで"<<std::endl;
+        return n_++;
+    }
+};
+
+int main()
+{
+    test hoge;
+    hoge++;
+}
+end:
+ozyou_wara:"「後置インクリメントやで」って出力されるね"
+sakuya_wara:"operator++の引数がない場合は前置インクリメントが、int型1つの場合は後置インクリメントがオーバーロードできます"
+ozyou_wara:"ではもう1つoperator=で返り値が設定されてるけどこれって大丈夫なの？"
+sakuya_wara:"そもそものoperator=に返り値がありますからね"
+start:
+int main()
+{
+    int x,y;
+    x = y = 10;
+}
+end:
+ozyou_wara:"なるほど"
+sakuya_oko:"返り値voidのoperator=はおこですよ<br />"
+continue:"あとoperator=は後でやる要素を使ったほうがいいので頭の片隅に置いとくだけしといてください"
+ozyou_wara:"了解です"
+null:""
+ozyou_oko:"ところでですが"
+sakuya_oko:"？"
+ozyou_oko:"std::coutってまさか"
+sakuya_oko:"はい、演算子オーバーロードですよ"
+ozyou_oko:"<<って演算子あるのね"
+sakuya_oko:"<<は本来ビットシフト演算子です、すなわち数値というのはコンピュータの中では1と0の列なのでそれをずらす処理をします"
+ozyou_oko:"やろうとおもったらユーザー定義型をstd::coutで出力できるの？"
+sakuya_oko:"多分出来るんだろうけど素人のうちはやめた方がいいと思う"
+ozyou_oko:"わかる"

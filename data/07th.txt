@@ -11,10 +11,10 @@ namespace sakuya
     class test
     {
         int x_;
-	int y_;
+        int y_;
     public:
         test(int x,int y):x_(x),y_(y){}
-	test():x_(0),y_(0){}
+        test():x_(0),y_(0){}
     };
 }
 
